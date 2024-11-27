@@ -8,7 +8,7 @@ import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 // export const metadata = {
-//   title: "SGetInToPC - Full Version Software",
+//   title: "IsCracks - Full Version Software",
 //   description:
 //     "Free Download Windows & MacOS software, Android Apps & Games, E-Learning Videos & E-Books, PC Games, Scripts and much more.",
 // };
@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
       {/* <head>
         <link
           rel="canonical"
-          href={currentUrl || "https://crackswall.vercel.app"}
+          href={currentUrl || "https://iscracks.com"}
         />
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
