@@ -1,130 +1,111 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+// Utility function to extract token from state (optional, depending on your structure)
+const extractToken = (state) => state?.authReducer?.token;
+
 const blogService = createApi({
-  reducerPath: "blog",
-  tagType: "blogOperation",
+  reducerPath: "blog", // Key for the API state slice
+  tagTypes: ["BlogOperation"], // Tag types for cache invalidation
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL, // Use env variable for base URL
     prepareHeaders: (headers, { getState }) => {
-      const reducers = getState();
-      const token = reducers?.authReducer?.token;
-      headers.set("authorization", token ? `Bearer ${token}` : "");
+      const token = extractToken(getState());
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
       headers.set("Content-Type", "application/json");
       headers.set("Accept", "application/json");
       return headers;
     },
   }),
-  endpoints: (builder) => {
-    return {
-      createBlog: builder.mutation({
-        query: (data) => {
-          return {
-            url: "/api/blog",
-            method: "POST",
-            body: data,
-          };
-        },
-        invalidatesTags: ["blogOperation"],
-      }),
-      updateBlog: builder.mutation({
-        query: ({ _id, values }) => {
-          return {
-            url: `/api/blog/update/${_id}`,
-            method: "POST",
-            body: values,
-          };
-        },
-        invalidatesTags: ["blogOperation"],
-      }),
-      getBlogs: builder.query({
-        query: () => {
-          return {
-            url: "/api/allblogs",
-            method: "GET",
-          };
-        },
-        providesTags: ["blogOperation"],
-      }),
-      getAllCategoriesBlogs: builder.query({
-        query: () => {
-          return {
-            url: "/api/allcategoryblogs",
-            method: "GET",
-          };
-        },
-        providesTags: ["blogOperation"],
-      }),
-      getSingleBlog: builder.query({
-        query: (subCategory) => {
-          return {
-            url: `/api/blogblogsdetails/${subCategory}`,
-            method: "GET",
-          };
-        },
-        providesTags: ["blogOperation"],
-      }),
+  endpoints: (builder) => ({
+    // Fetch all blogs
+    getBlogs: builder.query({
+      query: () => "/api/allblogs",
+      providesTags: ["BlogOperation"], // Cache invalidation tag
+    }),
 
-      getBlogsByCategory: builder.query({
-        query: (categoryName) => {
-          return {
-            url: `/api/categoryblogs/${categoryName}`,
-            method: "GET",
-          };
-        },
-        providesTags: ["blogOperation"],
+    // Fetch a single blog by subCategory (or ID)
+    getSingleBlog: builder.query({
+      query: (subCategory) => `/api/blogblogsdetails/${subCategory}`,
+      providesTags: ["BlogOperation"],
+    }),
+
+    // Create a new blog post
+    createBlog: builder.mutation({
+      query: (data) => ({
+        url: "/api/blog",
+        method: "POST",
+        body: data,
       }),
-      getBlogsBySubCategory: builder.query({
-        query: (subCategoryName) => {
-          return {
-            url: `/api/subcategoryblogs/${subCategoryName}`,
-            method: "GET",
-          };
-        },
-        providesTags: ["blogOperation"],
+      invalidatesTags: [{ type: "BlogOperation", id: "LIST" }], // Invalidate blog list cache
+    }),
+
+    // Update an existing blog post
+    updateBlog: builder.mutation({
+      query: ({ _id, values }) => ({
+        url: `/api/blog/update/${_id}`,
+        method: "POST",
+        body: values,
       }),
-      getBlogsBySearch: builder.query({
-        query: (query) => {
-          return {
-            url: `/api/searchblog?name=${query}`,
-            method: "GET",
-          };
-        },
-        providesTags: ["blogOperation"],
+      invalidatesTags: [{ type: "BlogOperation", id: "LIST" }], // Invalidate blog list cache
+    }),
+
+    // Delete a blog post by ID
+    deleteBlog: builder.mutation({
+      query: (id) => ({
+        url: `/api/blog/delete/${id}`,
+        method: "GET",
       }),
-      deleteBlogs: builder.mutation({
-        query: (id) => {
-          return {
-            url: `/api/blog/delete/${id}`,
-            method: "GET",
-          };
-        },
-        invalidatesTags: ["blogOperation"],
+      invalidatesTags: [{ type: "BlogOperation", id: "LIST" }], // Invalidate blog list cache
+    }),
+
+    // Fetch blogs by category name
+    getBlogsByCategory: builder.query({
+      query: (categoryName) => `/api/categoryblogs/${categoryName}`,
+      providesTags: ["BlogOperation"],
+    }),
+
+    // Fetch blogs by subcategory name
+    getBlogsBySubCategory: builder.query({
+      query: (subCategoryName) => `/api/subcategoryblogs/${subCategoryName}`,
+      providesTags: ["BlogOperation"],
+    }),
+
+    // Search blogs by query string
+    getBlogsBySearch: builder.query({
+      query: (query) => `/api/searchblog?name=${query}`,
+      providesTags: ["BlogOperation"],
+    }),
+
+    // Fetch all blog categories
+    getAllCategoriesBlogs: builder.query({
+      query: () => "/api/allcategoryblogs",
+      providesTags: ["BlogOperation"],
+    }),
+
+    // Create a comment on a blog post
+    createComment: builder.mutation({
+      query: ({ formData, id }) => ({
+        url: `/api/leavecomment/${id}`,
+        method: "POST",
+        body: formData,
       }),
-      createComment: builder.mutation({
-        query: ({ formData, id }) => {
-          return {
-            url: `/api/leavecomment/${id}`,
-            method: "POST",
-            body: formData,
-          };
-        },
-        invalidatesTags: ["blogOperation"],
-      }),
-    };
-  },
-  tagTypes: ["blogOperation"],
+      invalidatesTags: [{ type: "BlogOperation", id: "LIST" }], // Cache invalidation for blog list
+    }),
+  }),
 });
 
 export const {
+  useGetBlogsQuery,
+  useGetSingleBlogQuery,
   useCreateBlogMutation,
   useUpdateBlogMutation,
-  useGetBlogsQuery,
-  useGetAllCategoriesBlogsQuery,
-  useGetSingleBlogQuery,
+  useDeleteBlogMutation,
   useGetBlogsByCategoryQuery,
   useGetBlogsBySubCategoryQuery,
   useGetBlogsBySearchQuery,
-  useDeleteBlogMutation,
+  useGetAllCategoriesBlogsQuery,
   useCreateCommentMutation,
 } = blogService;
 

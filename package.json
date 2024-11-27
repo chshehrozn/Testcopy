@@ -17,7 +17,7 @@
     "dompurify": "^3.1.6",
     "formik": "^2.4.6",
     "moment": "^2.30.1",
-    "next": "14.2.5",
+    "next": "^14.2.18",
     "next-sitemap": "^4.2.3",
     "react": "^18",
     "react-data-table-component": "^7.6.2",
@@ -31,6 +31,7 @@
     "react-top-loading-bar": "^2.3.1",
     "styled-components": "^6.1.12",
     "swiper": "^11.1.12",
+    "swr": "^2.2.5",
     "yup": "^1.4.0"
   },
   "devDependencies": {
