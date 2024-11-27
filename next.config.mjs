@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["media.imgcdn.org", "crackswall.zeezsoft.com"],
+    domains: ["media.imgcdn.org", "admin.iscracks.com"],
   },
   trailingSlash: true,
   async rewrites() {
@@ -16,7 +16,7 @@ const nextConfig = {
   //   return [
   //     {
   //       source: "/:path*",
-  //       has: [{ type: "host", value: "www.sgetintopc.com" }],
+  //       has: [{ type: "host", value: "iscracks.com" }],
   //       destination: "/:path*/",
   //       permanent: true,
   //     },
