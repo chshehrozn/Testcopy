@@ -1,4 +1,5 @@
 import LandingPageWrapper from "./LandingPageWrapper";
+
 export default async function HomePage() {
   const { NEXT_PUBLIC_BASE_URL } = process.env;
 
@@ -30,10 +31,35 @@ export default async function HomePage() {
   const blogGameCategory = blogGameCategoryResponse || {};
 
   return (
-    <LandingPageWrapper
-      blogs={blogs}
-      categories={categories}
-      blogGameCategory={blogGameCategory}
-    />
+    <div className="homepage-container">
+      {/* Left Section: Windows & Mac */}
+      <div className="left-section">
+        <h2>Windows & Mac</h2>
+        <ul>
+          {categories
+            .filter((category) => category.name === "Windows" || category.name === "Mac")
+            .map((category) => (
+              <li key={category._id}>{category.name}</li>
+            ))}
+        </ul>
+      </div>
+
+      {/* Right Section: Fixed PC Games */}
+      <div className="right-section">
+        <h2>PC Games</h2>
+        <ul>
+          {blogGameCategory.data &&
+            blogGameCategory.data.map((game) => (
+              <li key={game._id}>{game.name}</li>
+            ))}
+        </ul>
+      </div>
+
+      <LandingPageWrapper
+        blogs={blogs}
+        categories={categories}
+        blogGameCategory={blogGameCategory}
+      />
+    </div>
   );
 }
