@@ -28,8 +28,8 @@ function Header({ setOpenSidebar, title }) {
             <div className="flex items-center gap-3">
               <a href="/">
                 <Image
-                  src="/images/zeezfaveicon.png"
-                  alt="Description of image"
+                  src="/images/ISC.png"
+                  alt="IsCracks - Full Version Software's"
                   width={46}
                   height={46}
                 />
