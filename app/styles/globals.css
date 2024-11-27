@@ -17,6 +17,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizelegibility;
+    /* user-select: none; */
   }
 
   button,
@@ -39,7 +40,6 @@ body {
     -webkit-box-shadow: 0 0 0 1000px rgb(255, 255, 255) inset !important;
   }
 }
-
 @layer utilities {
   .margins {
     @apply px-4 sm:px-6 lg:px-32;
@@ -64,9 +64,8 @@ body {
   .buttonHole {
     @apply w-full px-5 py-2 text-base font-medium text-gray-900 transition-colors duration-300 transform rounded-md !bg-transparent focus:outline-none focus:bg-gray-900/90 border-[1px] border-solid border-gray-900 disabled:cursor-not-allowed disabled:opacity-80;
   }
-
   .btn-transparent {
-    @apply text-sm font-medium rounded text-[#2b373a] !border border-[#2b373a] border-solid py-[3px] px-5 cursor-pointer hover:bg-[#00856f] hover:text-white hover:border-[#00856f];
+    @apply text-sm font-medium rounded text-[#2b373a] !border border-[#2b373a] border-solid  py-[3px] px-5 cursor-pointer hover:bg-[#00856f] hover:text-white hover:border-[#00856f];
   }
 
   .fieldLabel {
@@ -80,7 +79,6 @@ body {
   .tooltip {
     @apply absolute top-[-54px] py-[8px] px-[16px] rounded-[3px] text-[15px] text-white bg-black animation flex flex-col justify-center items-center;
   }
-
   .tooltip::after {
     content: "";
     @apply absolute bottom-[-4px] h-[8px] w-[8px] text-white bg-black rotate-[45deg];
@@ -150,12 +148,10 @@ body {
       background-position: 1200px 0;
     }
   }
-
   .table-responsive {
     overflow: hidden;
     overflow-x: auto;
   }
-
   .table-responsive::-webkit-scrollbar {
     width: 5px;
     height: 5px;
@@ -164,8 +160,8 @@ body {
   .table-responsive .table-head {
     padding: 6px 0;
     background: #3498db;
+    /* background: linear-gradient(90.08deg, #2e097b 16.28%, #e069e4 139.66%); */
   }
-
   .table-responsive .table-head th {
     border: 1px solid #f0f0f0;
     text-align: start;
@@ -177,89 +173,30 @@ body {
   .table-body {
     padding: 0px 0;
   }
-
   .table-body tr {
     padding: 2px;
   }
-
   .table-body td {
     padding: 4px 8px !important;
     font-size: 13px;
   }
-
   tbody tr:nth-child(odd) {
     /* background-color: #f0f0f0; */
   }
-
   .prose h2 {
     @apply text-2xl my-4 font-bold text-gray-800;
   }
-
   .prose h3 {
     @apply text-xl my-4 font-bold text-gray-800;
   }
-
   .prose p {
     @apply leading-7 text-gray-600 text-base font-normal;
   }
-
   .prose ul {
     @apply list-disc pl-5 mt-2;
   }
-
   .prose li {
     @apply list-disc pl-5 mt-2 text-base font-normal;
-  }
-
-  /* New styles for homepage layout */
-  .homepage-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    margin-top: 20px;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-
-  /* Left section (Windows & Mac categories) - scrollable */
-  .left-section {
-    flex: 0 0 30%;
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    overflow-y: auto;
-    max-height: 100vh;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Right section (PC Games) - Fixed position */
-  .right-section {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 20px;
-    flex: 0 0 30%;
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    max-height: 100vh;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-  }
-
-  .right-section > * {
-    margin-bottom: 20px;
-  }
-
-  /* Adjust for responsiveness */
-  @media (max-width: 1024px) {
-    .homepage-container {
-      flex-direction: column;
-    }
-
-    .left-section, .right-section {
-      flex: 1 1 100%;
-      max-height: none;
-    }
   }
 }
 
@@ -275,11 +212,9 @@ body {
   height: 18px;
   width: 18px;
 }
-
 .search-box .search-icon svg path {
   stroke: #ffffff;
 }
-
 .title-header {
   color: #fff;
   display: flex;
@@ -287,11 +222,19 @@ body {
   height: 64px;
   background: linear-gradient(90deg, #05e6aa, #1cbdf9);
 }
-
 .swiper {
   width: 730px;
   height: 430px;
+  /* height: 300px; */
 }
 
 .swiper-slide {
+  /* text-align: center; */
+  /* font-size: 18px; */
+  /* background: #fff; */
+
+  /* Center slide text vertically */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
 }
