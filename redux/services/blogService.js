@@ -63,29 +63,10 @@ const blogService = createApi({
         },
         providesTags: ["blogOperation"],
       }),
-
       getBlogsByCategory: builder.query({
         query: (categoryName) => {
           return {
             url: `/api/categoryblogs/${categoryName}`,
-            method: "GET",
-          };
-        },
-        providesTags: ["blogOperation"],
-      }),
-      getBlogsBySubCategory: builder.query({
-        query: (subCategoryName) => {
-          return {
-            url: `/api/subcategoryblogs/${subCategoryName}`,
-            method: "GET",
-          };
-        },
-        providesTags: ["blogOperation"],
-      }),
-      getBlogsBySearch: builder.query({
-        query: (query) => {
-          return {
-            url: `/api/searchblog?name=${query}`,
             method: "GET",
           };
         },
@@ -122,8 +103,6 @@ export const {
   useGetAllCategoriesBlogsQuery,
   useGetSingleBlogQuery,
   useGetBlogsByCategoryQuery,
-  useGetBlogsBySubCategoryQuery,
-  useGetBlogsBySearchQuery,
   useDeleteBlogMutation,
   useCreateCommentMutation,
 } = blogService;
